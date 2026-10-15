@@ -1,7 +1,6 @@
 package de.epp.cfiles;
 
 import android.content.Intent;
-import android.media.AudioManager;
 import android.media.session.MediaSession;
 import android.media.session.PlaybackState;
 import android.net.Uri;
@@ -10,10 +9,17 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
 import android.view.KeyEvent;
+import android.webkit.JavascriptInterface;
 import com.getcapacitor.BridgeActivity;
 
 public class MainActivity extends BridgeActivity {
     private MediaSession mediaSession;
+
+    private static final long ACTIONS =
+        PlaybackState.ACTION_PLAY |
+        PlaybackState.ACTION_PAUSE |
+        PlaybackState.ACTION_SKIP_TO_NEXT |
+        PlaybackState.ACTION_SKIP_TO_PREVIOUS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,14 +27,14 @@ public class MainActivity extends BridgeActivity {
         super.onCreate(savedInstanceState);
         requestManageFilesPermission();
         setupMediaSession();
+        setupMediaBridge();
     }
 
     private void setupMediaSession() {
-        // Audio-Fokus anfordern
-        AudioManager am = (AudioManager) getSystemService(AUDIO_SERVICE);
-        if (am != null) {
-            am.requestAudioFocus(null, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
-        }
+        // WICHTIG: Hier KEIN requestAudioFocus() und KEIN setActive(true) beim Start.
+        // Sonst pausiert fremde Musik, sobald die App geöffnet wird.
+        // Den Audio-Fokus fordert das <audio>-Element der WebView selbst an,
+        // sobald wirklich ein Lied abgespielt wird.
 
         mediaSession = new MediaSession(this, "cfiles");
         mediaSession.setFlags(
@@ -37,12 +43,7 @@ public class MainActivity extends BridgeActivity {
         );
 
         PlaybackState state = new PlaybackState.Builder()
-            .setActions(
-                PlaybackState.ACTION_PLAY |
-                PlaybackState.ACTION_PAUSE |
-                PlaybackState.ACTION_SKIP_TO_NEXT |
-                PlaybackState.ACTION_SKIP_TO_PREVIOUS
-            )
+            .setActions(ACTIONS)
             .setState(PlaybackState.STATE_STOPPED, PlaybackState.PLAYBACK_POSITION_UNKNOWN, 1f)
             .build();
         mediaSession.setPlaybackState(state);
@@ -86,7 +87,35 @@ public class MainActivity extends BridgeActivity {
             }
         });
 
-        mediaSession.setActive(true);
+        // Session bleibt inaktiv, bis in der App wirklich ein Lied gestartet wird.
+        mediaSession.setActive(false);
+    }
+
+    /**
+     * Brücke für die WebView: index.html ruft AndroidMedia.setPlaying(true/false) auf.
+     * Erst dann wird die MediaSession aktiv (Kopfhörer-/Bluetooth-Tasten) und der
+     * Wiedergabestatus gesetzt.
+     */
+    private void setupMediaBridge() {
+        getBridge().getWebView().addJavascriptInterface(new Object() {
+            @JavascriptInterface
+            public void setPlaying(final boolean playing) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (mediaSession == null) return;
+                        mediaSession.setActive(true);
+                        mediaSession.setPlaybackState(new PlaybackState.Builder()
+                            .setActions(ACTIONS)
+                            .setState(
+                                playing ? PlaybackState.STATE_PLAYING : PlaybackState.STATE_PAUSED,
+                                PlaybackState.PLAYBACK_POSITION_UNKNOWN,
+                                1f)
+                            .build());
+                    }
+                });
+            }
+        }, "AndroidMedia");
     }
 
     private void js(final String script) {

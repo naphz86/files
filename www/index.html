@@ -2327,6 +2327,7 @@
                         audioEl.play().catch(function () {
                             toast("Kann nicht abgespielt werden");
                         });
+                        if (window.AndroidMedia) window.AndroidMedia.setPlaying(true);
                     } catch (e) {
                         toast("Kann nicht abgespielt werden");
                     }
@@ -2374,6 +2375,7 @@
                         el.classList.remove("paused");
                     });
                     if ("mediaSession" in navigator) navigator.mediaSession.playbackState = "playing";
+                    if (window.AndroidMedia) window.AndroidMedia.setPlaying(true);
                 } else {
                     audioEl.pause();
                     S.player.paused = true;
@@ -2382,6 +2384,7 @@
                         el.classList.add("paused");
                     });
                     if ("mediaSession" in navigator) navigator.mediaSession.playbackState = "paused";
+                    if (window.AndroidMedia) window.AndroidMedia.setPlaying(false);
                 }
             }
             function playerOpenFolder() {
