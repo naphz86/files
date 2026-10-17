@@ -2361,7 +2361,10 @@
                         audioEl.play().catch(function () {
                             toast("Kann nicht abgespielt werden");
                         });
-                        if (window.AndroidMedia) window.AndroidMedia.setPlaying(true);
+                        if (window.AndroidMedia) {
+                            window.AndroidMedia.setTitle(name);
+                            window.AndroidMedia.setPlaying(true);
+                        }
                     } catch (e) {
                         toast("Kann nicht abgespielt werden");
                     }

@@ -3,6 +3,9 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+        <meta name="color-scheme" content="dark light" />
+        <meta name="theme-color" content="#131313" media="(prefers-color-scheme: dark)" />
+        <meta name="theme-color" content="#f6f3ee" media="(prefers-color-scheme: light)" />
         <title>Dateien</title>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
@@ -37,12 +40,43 @@
                 --txt3: #5c5650;
                 --red: #c85040;
                 --red-d: rgba(200, 80, 64, 0.14);
+                --edge: rgba(255, 255, 255, 0.04);
+                --on-acc: #000;
+                --scrim: rgba(0, 0, 0, 0.65);
+                --scrim2: rgba(0, 0, 0, 0.75);
+                --acc-play: rgba(232, 168, 48, 0.06);
                 --r: 18px;
                 /* Button-Radius — großzügig rund */
                 --rs: 12px;
                 --nav: calc(64px + env(safe-area-inset-bottom, 0px));
                 --top: calc(56px + env(safe-area-inset-top, 0px));
                 --f: "DM Sans", sans-serif;
+            }
+
+            /* ── LIGHT MODE (folgt dem System) ── */
+            @media (prefers-color-scheme: light) {
+                :root {
+                    color-scheme: light;
+                    --bg: #f6f3ee;
+                    --bg1: #ffffff;
+                    --bg2: #efebe4;
+                    --btn: #ebe6dd;
+                    --btn-h: #ded8cc;
+                    --line: #ddd6ca;
+                    --acc: #d99512;
+                    --acc2: #c4840c;
+                    --acc-d: rgba(217, 149, 18, 0.16);
+                    --txt: #1d1b18;
+                    --txt2: #5c564d;
+                    --txt3: #8f887c;
+                    --red: #b8402f;
+                    --red-d: rgba(184, 64, 47, 0.12);
+                    --edge: rgba(0, 0, 0, 0.06);
+                    --on-acc: #1d1b18;
+                    --scrim: rgba(20, 16, 10, 0.45);
+                    --scrim2: rgba(20, 16, 10, 0.55);
+                    --acc-play: rgba(217, 149, 18, 0.1);
+                }
             }
 
             *,
@@ -212,7 +246,7 @@
             #btnSelectAll.all-sel .sel-all-circle {
                 background: var(--acc);
                 border-color: var(--acc);
-                color: #000;
+                color: var(--on-acc);
             }
 
             #btnSelectAll .sel-all-circle svg {
@@ -417,7 +451,7 @@
                 transition:
                     background 0.12s,
                     transform 0.1s;
-                border: 1px solid rgba(255, 255, 255, 0.04);
+                border: 1px solid var(--edge);
             }
 
             .tile:active {
@@ -596,6 +630,11 @@
                 font-weight: 400;
                 color: var(--txt2);
                 margin-top: 3px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                padding-right: 2px;
+                max-width: calc(100% - 2px);
             }
 
             /* ── MULTI-SELECT ── */
@@ -625,7 +664,7 @@
             body.multi-mode .fitem.sel .fsel-chk {
                 background: var(--acc);
                 border-color: var(--acc);
-                color: #000;
+                color: var(--on-acc);
             }
 
             .fsel-chk svg {
@@ -751,6 +790,11 @@
                 text-overflow: ellipsis;
                 white-space: nowrap;
             }
+			
+			.move-btn-row {
+				display: flex;
+				gap: 10px;
+			}
 
             /* ── EMPTY ── */
             .empty {
@@ -818,7 +862,7 @@
             .sheet-bg {
                 position: fixed;
                 inset: 0;
-                background: rgba(0, 0, 0, 0.65);
+                background: var(--scrim);
                 z-index: 200;
                 display: none;
                 backdrop-filter: blur(4px);
@@ -892,7 +936,7 @@
                 transition:
                     background 0.12s,
                     transform 0.1s;
-                border: 1px solid rgba(255, 255, 255, 0.04);
+                border: 1px solid var(--edge);
             }
 
             .ctx-btn:active {
@@ -1056,7 +1100,7 @@
                 background: var(--btn);
                 color: var(--txt2);
                 /* heller BG */
-                border: 1px solid rgba(255, 255, 255, 0.04);
+                border: 1px solid var(--edge);
                 transition: background 0.12s;
             }
 
@@ -1093,7 +1137,7 @@
                 font-weight: 700;
                 color: var(--txt);
                 /* helle Schrift */
-                border: 1px solid rgba(255, 255, 255, 0.04);
+                border: 1px solid var(--edge);
                 transition: background 0.12s;
             }
 
@@ -1125,7 +1169,7 @@
             .dlg-bg {
                 position: fixed;
                 inset: 0;
-                background: rgba(0, 0, 0, 0.75);
+                background: var(--scrim2);
                 z-index: 300;
                 display: none;
                 align-items: center;
@@ -1201,7 +1245,7 @@
                 /* heller Hintergrund */
                 color: var(--txt2);
                 /* helle Schrift */
-                border: 1px solid rgba(255, 255, 255, 0.04);
+                border: 1px solid var(--edge);
                 transition: background 0.12s;
             }
 
@@ -1211,7 +1255,7 @@
 
             .dlg-btn.ok {
                 background: var(--acc);
-                color: #131313;
+                color: var(--on-acc);
                 border: none;
             }
 
@@ -1326,7 +1370,7 @@
                 background: var(--btn);
                 color: var(--txt);
                 gap: 2px;
-                border: 1px solid rgba(255, 255, 255, 0.04);
+                border: 1px solid var(--edge);
                 padding: 0 6px;
                 transition:
                     background 0.12s,
@@ -1369,7 +1413,7 @@
             }
 
             .fitem.playing.paused {
-                background: rgba(232, 168, 48, 0.06);
+                background: var(--acc-play);
             }
 
             .fitem.playing.paused .fname {
@@ -1475,7 +1519,7 @@
 
                 <div class="sec-lbl">Schnellzugriff</div>
                 <div class="tiles">
-                    <button class="tile" style="animation-delay: 0.03s" onclick="nav('/sdcard/Download', 'Downloads')">
+                    <button class="tile" style="animation-delay: 0.03s" onclick="navDownloads()">
                         <div class="tile-icon ic-dl">
                             <svg viewBox="0 0 24 24">
                                 <path d="M5 20h14v-2H5v2zM19 9h-4V3H9v6H5l7 7 7-7z" />
@@ -1866,9 +1910,12 @@
             </div>
             <div id="moveDirList" style="overflow-y: auto; max-height: 50vh"></div>
             <div class="move-confirm">
-                <div class="move-dest" id="moveDest">/sdcard</div>
-                <button class="dlg-btn ok" onclick="doMultiMove()">Hierher verschieben</button>
-            </div>
+				<div class="move-dest" id="moveDest">/sdcard</div>
+				<div class="move-btn-row">
+					<button class="dlg-btn ok" onclick="doMultiMove()">Hierher verschieben</button>
+					<button class="dlg-btn ok" onclick="createFolderInMove()">Neuer Ordner</button>
+				</div>
+			</div>
         </div>
 
         <!-- RENAME DIALOG -->
@@ -1969,6 +2016,11 @@
             }
 
             /* ── NAVIGATION ── */
+            function navDownloads() {
+                S.fromDownloads = true;
+                nav("/sdcard/Download", "Downloads");
+                document.getElementById("topTitle").classList.add("new-folder-mode");
+            }
             function navAllFiles() {
                 S.fromAllFiles = true;
                 nav("/sdcard", "Alle Dateien");
@@ -1981,6 +2033,7 @@
             function showHome() {
                 S.musicMode = false;
                 S.fromAllFiles = false;
+                S.fromDownloads = false;
                 document.getElementById("topTitle").classList.remove("new-folder-mode");
                 setNav(0);
                 exitMultiMode();
@@ -2054,7 +2107,7 @@
                 document.getElementById("app").style.paddingTop = "var(--top)";
             }
             function bcTap(i) {
-                if (S.fromAllFiles) {
+                if (S.fromAllFiles || S.fromDownloads) {
                     const t = S.crumbs[i];
                     if (S.path !== t.path) {
                         S.crumbs = S.crumbs.slice(0, i + 1);
@@ -2070,7 +2123,7 @@
                 }
             }
             function topTitleTap() {
-                if (S.fromAllFiles) openFolderDlg();
+                if (S.fromAllFiles || S.fromDownloads) openFolderDlg();
             }
             function jumpBc(i) {
                 const t = S.crumbs[i];
@@ -2308,6 +2361,10 @@
                         audioEl.play().catch(function () {
                             toast("Kann nicht abgespielt werden");
                         });
+                        if (window.AndroidMedia) {
+                            window.AndroidMedia.setTitle(name);
+                            window.AndroidMedia.setPlaying(true);
+                        }
                     } catch (e) {
                         toast("Kann nicht abgespielt werden");
                     }
@@ -2355,6 +2412,7 @@
                         el.classList.remove("paused");
                     });
                     if ("mediaSession" in navigator) navigator.mediaSession.playbackState = "playing";
+                    if (window.AndroidMedia) window.AndroidMedia.setPlaying(true);
                 } else {
                     audioEl.pause();
                     S.player.paused = true;
@@ -2363,6 +2421,7 @@
                         el.classList.add("paused");
                     });
                     if ("mediaSession" in navigator) navigator.mediaSession.playbackState = "paused";
+                    if (window.AndroidMedia) window.AndroidMedia.setPlaying(false);
                 }
             }
             function playerOpenFolder() {
@@ -2415,7 +2474,18 @@
                     return;
                 }
                 E.style.display = "none";
-                L.innerHTML = (S.recent || []).map((f, i) => itemHTML(f, i)).join("");
+                L.innerHTML = (S.recent || []).map((f, i) => {
+                    const d = Math.min(i * 0.025, 0.25);
+                    const dirArg = f.dir ? `,'${eq(f.dir)}'` : ",''";
+                    const pathDisplay = f.path ? `<div class="fsub">${esc(f.path)}</div>` : "";
+                    return `<button class="fitem" id="fi_${i}" style="animation-delay:${d}s"
+                onclick="onTap('${eq(f.name)}','${f.type}'${dirArg},${i})"
+                oncontextmenu="openCtx('${eq(f.name)}','${f.type}'${dirArg});return false">
+                <div class="fsel-chk"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+                <div class="ficon ${fc(f)}">${fi(f)}</div>
+                <div class="fmeta"><div class="fname">${esc(f.name)}</div>${pathDisplay}</div>
+              </button>`;
+                }).join("");
             }
 
             /* ── SORT ── */
@@ -2551,50 +2621,80 @@
                 if (btnSh) btnSh.style.display = hasFile ? "" : "none";
                 updateSelectAllBtn();
             }
+            /* ── FS-Helfer: Dateien UND Ordner (rekursiv) löschen ── */
+            async function capRm(path, type) {
+                const FS = window.Capacitor.Plugins.Filesystem;
+                if (type !== "dir") {
+                    await FS.deleteFile({ path });
+                    return;
+                }
+                // 1. Versuch: nativ rekursiv
+                try {
+                    await FS.rmdir({ path, recursive: true });
+                    return;
+                } catch (e) {
+                    /* Fallback: manuell von innen nach außen löschen */
+                }
+                const r = await FS.readdir({ path });
+                for (const x of r.files || []) {
+                    const name = typeof x === "string" ? x : x.name;
+                    const isDir = typeof x === "object" && x.type === "directory";
+                    await capRm(path + "/" + name, isDir ? "dir" : "file");
+                }
+                await FS.rmdir({ path, recursive: false });
+            }
+            // Datei/Ordner in den Papierkorb verschieben (rename, Fallback copy + löschen)
+            async function capToTrash(f, trashName) {
+                const FS = window.Capacitor.Plugins.Filesystem;
+                const trashPath = "/sdcard/.fm_trash/";
+                try {
+                    await FS.mkdir({ path: trashPath, recursive: true });
+                } catch (e) {}
+                try {
+                    await FS.rename({ from: f.path, to: trashPath + trashName });
+                } catch (e) {
+                    await FS.copy({ from: f.path, to: trashPath + trashName });
+                    await capRm(f.path, f.type);
+                }
+            }
             async function multiDelete() {
                 if (!S.selected.length) return;
+                const nDirs = S.selected.filter((f) => f.type === "dir").length;
                 if (
                     !S.trashOn &&
                     !confirm(
                         S.selected.length +
-                            (S.selected.length === 1 ? " Datei" : " Dateien") +
+                            (S.selected.length === 1 ? " Element" : " Elemente") +
+                            (nDirs ? " (inkl. Ordner mit Inhalt)" : "") +
                             " dauerhaft l\u00f6schen?",
                     )
                 )
                     return;
                 const files = [...S.selected];
                 exitMultiMode();
-                let n = 0;
+                toast("L\u00f6sche \u2026");
+                let n = 0,
+                    failed = 0;
                 for (const f of files) {
-                    if (S.trashOn) {
-                        const trashName = Date.now() + "_" + f.name;
-                        S.trashItems.push({ ...f, deletedAt: Date.now(), trashName });
-                        if (S.isCap) {
-                            try {
-                                const { Filesystem } = window.Capacitor.Plugins;
-                                const trashPath = "/sdcard/.fm_trash/";
-                                try {
-                                    await Filesystem.mkdir({ path: trashPath, recursive: true });
-                                } catch (e) {}
-                                await Filesystem.rename({ from: f.path, to: trashPath + trashName });
-                            } catch (e) {}
+                    try {
+                        if (S.trashOn) {
+                            const trashName = Date.now() + "_" + f.name;
+                            if (S.isCap) await capToTrash(f, trashName);
+                            S.trashItems.push({ ...f, deletedAt: Date.now(), trashName });
+                        } else if (S.isCap) {
+                            await capRm(f.path, f.type);
                         }
-                    } else {
-                        if (S.isCap) {
-                            try {
-                                await window.Capacitor.Plugins.Filesystem.deleteFile({ path: f.path });
-                            } catch (e) {}
-                        }
+                        n++;
+                    } catch (e) {
+                        failed++;
                     }
-                    n++;
                 }
                 sv();
                 updTrSub();
-                toast(
-                    S.trashOn
-                        ? n + (n === 1 ? " Datei" : " Dateien") + " in Papierkorb"
-                        : n + (n === 1 ? " Datei" : " Dateien") + " gel\u00f6scht",
-                );
+                const noun = n === 1 ? " Element" : " Elemente";
+                let msg = S.trashOn ? n + noun + " in Papierkorb" : n + noun + " gel\u00f6scht";
+                if (failed) msg += " (" + failed + " Fehler)";
+                toast(msg);
                 reload();
             }
             async function openMoveDlg() {
@@ -2712,38 +2812,33 @@
             async function doDelete(f) {
                 if (S.trashOn) {
                     const trashName = Date.now() + "_" + f.name;
+                    if (S.isCap) {
+                        try {
+                            toast("Verschiebe \u2026");
+                            await capToTrash(f, trashName);
+                        } catch (e) {
+                            toast("Fehler: " + ((e && e.message) || e));
+                            reload();
+                            return;
+                        }
+                    }
                     S.trashItems.push({ ...f, deletedAt: Date.now(), trashName });
                     sv();
                     updTrSub();
-                    if (S.isCap) {
-                        try {
-                            const { Filesystem } = window.Capacitor.Plugins;
-                            const trashPath = "/sdcard/.fm_trash/";
-
-                            // Trash-Ordner anlegen falls nicht vorhanden
-                            try {
-                                await Filesystem.mkdir({ path: trashPath, recursive: true });
-                            } catch (e) {}
-
-                            // Datei in Papierkorb verschieben (rename = move)
-                            await Filesystem.rename({ from: f.path, to: trashPath + trashName });
-                        } catch (e) {
-                            toast("Fehler: " + e.message);
-                            return;
-                        }
-                    }
                     toast("In Papierkorb verschoben");
                 } else {
-                    if (!confirm("Dauerhaft löschen?")) return;
+                    if (!confirm(f.type === "dir" ? "Ordner samt Inhalt dauerhaft l\u00f6schen?" : "Dauerhaft l\u00f6schen?")) return;
                     if (S.isCap) {
                         try {
-                            await window.Capacitor.Plugins.Filesystem.deleteFile({ path: f.path });
+                            toast("L\u00f6sche \u2026");
+                            await capRm(f.path, f.type);
                         } catch (e) {
-                            toast("Fehler");
+                            toast("Fehler: " + ((e && e.message) || e));
+                            reload();
                             return;
                         }
                     }
-                    toast("Gelöscht");
+                    toast("Gel\u00f6scht");
                 }
                 reload();
             }
@@ -2813,24 +2908,27 @@
                 toast("Alle wiederhergestellt");
                 renderTrash();
             }
-            function emptyTrash() {
+            async function emptyTrash() {
                 if (!S.trashItems.length) {
                     toast("Bereits leer");
                     return;
                 }
                 if (!confirm("Papierkorb wirklich leeren?")) return;
-                if (S.isCap)
-                    S.trashItems.forEach((f) => {
+                let failed = 0;
+                if (S.isCap) {
+                    toast("Leere Papierkorb \u2026");
+                    for (const f of S.trashItems) {
                         try {
-                            window.Capacitor.Plugins.Filesystem.deleteFile({
-                                path: "/sdcard/.fm_trash/" + (f.trashName || f.name),
-                            });
-                        } catch (e) {}
-                    });
+                            await capRm("/sdcard/.fm_trash/" + (f.trashName || f.name), f.type);
+                        } catch (e) {
+                            failed++;
+                        }
+                    }
+                }
                 S.trashItems = [];
                 sv();
                 updTrSub();
-                toast("Papierkorb geleert");
+                toast(failed ? "Papierkorb geleert (" + failed + " Fehler)" : "Papierkorb geleert");
                 renderTrash();
                 closeSettings();
             }
@@ -2905,24 +3003,54 @@
             function closeFolderDlg() {
                 document.getElementById("folderDlg").classList.remove("on");
             }
+			function createFolderInMove() {
+                S.createFolderInMove = true;
+                openFolderDlg();
+            }
             async function doCreateFolder() {
                 const n = document.getElementById("folderIn").value.trim();
                 if (!n) {
                     closeFolderDlg();
                     return;
                 }
+                
+                // Bestimme den Zielordner (entweder S.path oder S.movePath)
+                const targetPath = S.createFolderInMove ? S.movePath : S.path;
+                
                 if (S.isCap) {
                     try {
-                        await window.Capacitor.Plugins.Filesystem.mkdir({ path: S.path + "/" + n, recursive: false });
+                        await window.Capacitor.Plugins.Filesystem.mkdir({ 
+                            path: targetPath + "/" + n, 
+                            recursive: false 
+                        });
                         toast("Ordner erstellt");
-                        reload();
+                        
+                        // Unterschiedliche Behandlung je nach Modus
+                        if (S.createFolderInMove) {
+                            // Im moveMode: moveSheet aktualisieren
+                            await loadMoveDirs();
+                            S.createFolderInMove = false;
+                        } else {
+                            // Normal-Mode: ganzes Directory neuladen
+                            reload();
+                        }
                     } catch (e) {
                         toast("Fehler");
                     }
-                } else toast("📁 " + n + " erstellt");
+                } else {
+                    toast("📁 " + n + " erstellt");
+                    if (S.createFolderInMove) {
+                        // Im moveMode: moveSheet aktualisieren
+                        await loadMoveDirs();
+                        S.createFolderInMove = false;
+                    } else {
+                        // Normal-Mode: ganzes Directory neuladen
+                        reload();
+                    }
+                }
+                
                 closeFolderDlg();
             }
-
             /* ── SEARCH ── */
             function openSearch() {
                 document.getElementById("searchBar").classList.add("on");
