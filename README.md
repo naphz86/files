@@ -169,24 +169,6 @@ Beim ersten Start öffnet die App die Android-Einstellungen zur Freigabe der Ber
 - Gradle benötigt zwingend JDK 21; JDK 23 oder 24 sind nicht kompatibel
 - Die Weboberfläche lebt in www/index.html, die native Integration in Android liegt unter android/
 
-## Projektstruktur
-
-```text
-.
-├── android/                  # Native Android-Implementierung
-├── www/                     # Web-UI und JavaScript-Logik
-├── capacitor.config.json    # Capacitor-Konfiguration
-├── package.json             # Projekt- und Build-Skripte
-├── README.md                # Projektbeschreibung
-├── LICENSE                  # Lizenz
-└── .gitignore
-```
-
-Wichtige native Erweiterungen:
-
-- MainActivity.java: Android-Startlogik und Media-Session-Integration
-- ZipPlugin.java: ZIP-Komprimierung/Entpackung nativ in Java
-
 ## Lizenz und Erwerb
 
 Die Software wird als kommerzielle App für den privaten Sideload-Betrieb vertrieben.
