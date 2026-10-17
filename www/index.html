@@ -3,6 +3,9 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+        <meta name="color-scheme" content="dark light" />
+        <meta name="theme-color" content="#131313" media="(prefers-color-scheme: dark)" />
+        <meta name="theme-color" content="#f6f3ee" media="(prefers-color-scheme: light)" />
         <title>Dateien</title>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
@@ -37,12 +40,43 @@
                 --txt3: #5c5650;
                 --red: #c85040;
                 --red-d: rgba(200, 80, 64, 0.14);
+                --edge: rgba(255, 255, 255, 0.04);
+                --on-acc: #000;
+                --scrim: rgba(0, 0, 0, 0.65);
+                --scrim2: rgba(0, 0, 0, 0.75);
+                --acc-play: rgba(232, 168, 48, 0.06);
                 --r: 18px;
                 /* Button-Radius — großzügig rund */
                 --rs: 12px;
                 --nav: calc(64px + env(safe-area-inset-bottom, 0px));
                 --top: calc(56px + env(safe-area-inset-top, 0px));
                 --f: "DM Sans", sans-serif;
+            }
+
+            /* ── LIGHT MODE (folgt dem System) ── */
+            @media (prefers-color-scheme: light) {
+                :root {
+                    color-scheme: light;
+                    --bg: #f6f3ee;
+                    --bg1: #ffffff;
+                    --bg2: #efebe4;
+                    --btn: #ebe6dd;
+                    --btn-h: #ded8cc;
+                    --line: #ddd6ca;
+                    --acc: #d99512;
+                    --acc2: #c4840c;
+                    --acc-d: rgba(217, 149, 18, 0.16);
+                    --txt: #1d1b18;
+                    --txt2: #5c564d;
+                    --txt3: #8f887c;
+                    --red: #b8402f;
+                    --red-d: rgba(184, 64, 47, 0.12);
+                    --edge: rgba(0, 0, 0, 0.06);
+                    --on-acc: #1d1b18;
+                    --scrim: rgba(20, 16, 10, 0.45);
+                    --scrim2: rgba(20, 16, 10, 0.55);
+                    --acc-play: rgba(217, 149, 18, 0.1);
+                }
             }
 
             *,
@@ -212,7 +246,7 @@
             #btnSelectAll.all-sel .sel-all-circle {
                 background: var(--acc);
                 border-color: var(--acc);
-                color: #000;
+                color: var(--on-acc);
             }
 
             #btnSelectAll .sel-all-circle svg {
@@ -417,7 +451,7 @@
                 transition:
                     background 0.12s,
                     transform 0.1s;
-                border: 1px solid rgba(255, 255, 255, 0.04);
+                border: 1px solid var(--edge);
             }
 
             .tile:active {
@@ -630,7 +664,7 @@
             body.multi-mode .fitem.sel .fsel-chk {
                 background: var(--acc);
                 border-color: var(--acc);
-                color: #000;
+                color: var(--on-acc);
             }
 
             .fsel-chk svg {
@@ -828,7 +862,7 @@
             .sheet-bg {
                 position: fixed;
                 inset: 0;
-                background: rgba(0, 0, 0, 0.65);
+                background: var(--scrim);
                 z-index: 200;
                 display: none;
                 backdrop-filter: blur(4px);
@@ -902,7 +936,7 @@
                 transition:
                     background 0.12s,
                     transform 0.1s;
-                border: 1px solid rgba(255, 255, 255, 0.04);
+                border: 1px solid var(--edge);
             }
 
             .ctx-btn:active {
@@ -1066,7 +1100,7 @@
                 background: var(--btn);
                 color: var(--txt2);
                 /* heller BG */
-                border: 1px solid rgba(255, 255, 255, 0.04);
+                border: 1px solid var(--edge);
                 transition: background 0.12s;
             }
 
@@ -1103,7 +1137,7 @@
                 font-weight: 700;
                 color: var(--txt);
                 /* helle Schrift */
-                border: 1px solid rgba(255, 255, 255, 0.04);
+                border: 1px solid var(--edge);
                 transition: background 0.12s;
             }
 
@@ -1135,7 +1169,7 @@
             .dlg-bg {
                 position: fixed;
                 inset: 0;
-                background: rgba(0, 0, 0, 0.75);
+                background: var(--scrim2);
                 z-index: 300;
                 display: none;
                 align-items: center;
@@ -1211,7 +1245,7 @@
                 /* heller Hintergrund */
                 color: var(--txt2);
                 /* helle Schrift */
-                border: 1px solid rgba(255, 255, 255, 0.04);
+                border: 1px solid var(--edge);
                 transition: background 0.12s;
             }
 
@@ -1221,7 +1255,7 @@
 
             .dlg-btn.ok {
                 background: var(--acc);
-                color: #131313;
+                color: var(--on-acc);
                 border: none;
             }
 
@@ -1336,7 +1370,7 @@
                 background: var(--btn);
                 color: var(--txt);
                 gap: 2px;
-                border: 1px solid rgba(255, 255, 255, 0.04);
+                border: 1px solid var(--edge);
                 padding: 0 6px;
                 transition:
                     background 0.12s,
@@ -1379,7 +1413,7 @@
             }
 
             .fitem.playing.paused {
-                background: rgba(232, 168, 48, 0.06);
+                background: var(--acc-play);
             }
 
             .fitem.playing.paused .fname {
